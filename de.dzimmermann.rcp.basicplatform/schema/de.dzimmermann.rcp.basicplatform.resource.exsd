@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="de.dzimmermann.rcp.basicplatform" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appinfo>
+         <meta.schema plugin="de.dzimmermann.rcp.basicplatform" id="de.dzimmermann.rcp.basicplatform.resource" name="Basic Platform Internal Resource"/>
+      </appinfo>
+      <documentation>
+         This extension point defines a possibility to add a couple of resource jars, which may contain different data.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appinfo>
+            <meta.element />
+         </appinfo>
+      </annotation>
+      <complexType>
+         <sequence>
+            <element ref="resource"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="resource">
+      <complexType>
+         <sequence minOccurs="0" maxOccurs="unbounded">
+            <element ref="resource-entry"/>
+         </sequence>
+         <attribute name="resource-provider" type="string" use="required">
+            <annotation>
+               <documentation>
+                  select the plugins resource provider implementation, which is able to return the resources as a URLClassLoader
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":de.dzimmermann.rcp.basicplatform.util.PFSCoreResourceProvider"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="resource-entry">
+      <complexType>
+         <attribute name="path" type="string" use="required">
+            <annotation>
+               <documentation>
+                  use jar files in the specified format (see the description of this extension point).
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="resource"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="since"/>
+      </appinfo>
+      <documentation>
+         PFSRCPCore 0.5.0
+(2010-06-10)
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="examples"/>
+      </appinfo>
+      <documentation>
+         copy from read-me.txt:
+
+Place your resources bundles as jar files here!
+
+for all resources:
+ * specify a properties file named &quot;resource.properties&quot; within the META-INF direcory
+ * specify property &quot;resource-type&quot; with a single entry
+   - can be a value of enum ResourceType (see &quot;type&quot; attribute for correct values)
+ * if necessary specify the special properties
+
+ICON (image resource):
+ * property &quot;ICON.enabled&quot; the path to the enabled icons (without a leading &apos;/&apos;)
+ * property &quot;ICON.disabled&quot; the path to the disabled icons (without a leading &apos;/&apos;)
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="apiinfo"/>
+      </appinfo>
+      <documentation>
+         [Enter API information here.]
+      </documentation>
+   </annotation>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="implementation"/>
+      </appinfo>
+      <documentation>
+         [Enter information about supplied implementation of this extension point.]
+      </documentation>
+   </annotation>
+
+
+</schema>

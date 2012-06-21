@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root advanced-pw="" default-pw="" xmlns="http://de.dezimmermann.rcp.bsgtaucha.mgt/bsgtaucha-model" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://de.dezimmermann.rcp.bsgtaucha.mgt/bsgtaucha-model bsgtaucha-model.xsd ">
+  <persons>
+    <person active-member="true" birthday="2001-01-01" id="p1">
+      <name>Myself</name>
+      <firstname>Me</firstname>
+      <street>My Street</street>
+      <postalcode>12345</postalcode>
+      <city>Here</city>
+      <phone>0341/12345678</phone>
+      <mobile>mobile</mobile>
+      <fax>fax</fax>
+      <email>me@myself.de</email>
+    </person>
+  </persons>
+  <works>
+    <work affect-band="true" id="w1">
+      <name>Add Band</name>
+      <description>Add one or more bands</description>
+    </work>
+    <work affect-band="true" id="w2">
+      <name>Remove Band</name>
+      <description>Remove one or more bands</description>
+    </work>
+    <work affect-band="false" id="w3">
+      <name>Do Something</name>
+      <description>Do something</description>
+    </work>
+    <entry date="2001-01-01" person-id="p1" time="1.0" work-id="w1">
+      <comment>No bands where left, that was necesarry!</comment>
+      <band-action amount="10" band-type="continuous"/>
+    </entry>
+    <entry date="2001-01-01" person-id="p1" time="1.0" work-id="w2">
+      <comment>One continuous band was wasted...</comment>
+      <band-action amount="-1" band-type="continuous">
+        <track>1</track>
+        <track>2</track>
+      </band-action>
+    </entry>
+    <entry date="2001-01-01" person-id="p1" time="1.0" work-id="w3">
+      <comment>Did something very interesting!</comment>
+    </entry>
+  </works>
+</root>

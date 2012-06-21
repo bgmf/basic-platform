@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" immediate="true" name="basicplatformServices.provider">
+   <implementation class="de.dzimmermann.rcp.basicplatform.ds.services.Services"/>
+   <service>
+      <provide interface="de.dzimmermann.rcp.basicplatform.services.IAvailablePluginService"/>
+      <provide interface="de.dzimmermann.rcp.basicplatform.services.IGroupService"/>
+   </service>
+</scr:component>

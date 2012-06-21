@@ -1,0 +1,11 @@
+Place your resources bundles as jar files here!
+
+for all resources:
+ * specify a properties file named "resource.properties" within the META-INF direcory
+ * specify property "resource-type" with a single entry
+   - can be a value of enum ResourceType (see "type" attribute for correct values)
+ * if necessary specify the special properties
+
+ICON (image resource):
+ * property "ICON.enabled" the path to the enabled icons (without a leading '/')
+ * property "ICON.disabled" the path to the disabled icons (without a leading '/')

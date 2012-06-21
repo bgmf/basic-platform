@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.dzimmermann.rcp.basicplatform.plugin">
+      <bundle-definition
+            exec-factory="de.dzimmermann.rcp.bsgtaucha.mgt.factory.LocalExecutableFactory">
+         <bundle-task
+               description="Hier werden abgeleistete Aufgaben erfasst und dafür nötige Ressourcen, wie etwa Personen oder verbrauchte Bänder, organisert."
+               enabled="true"
+               id="de.dzimmermann.rcp.bsgtaucha.mgt.tasksAndResources"
+               internal-icon-name="fugue_target.png"
+               name="Aufgaben und Ressourcen"
+               sort-children="not"
+               target-class-id="none"
+               type="none">
+            <bundle-task
+                  description="Mit Hilfe des Wizards können Sie Dateien öffnen oder neue anlegen."
+                  id="de.dzimmermann.rcp.bsgtaucha.mgt.openFile"
+                  internal-icon-name="fugue_reports-stack.png"
+                  name="Datei anlegen/öffnen"
+                  target-class-id="de.dzimmermann.rcp.bsgtaucha.mgt.handler.OpenFileHandler"
+                  type="handler">
+            </bundle-task>
+            <bundle-task
+                  description="Hier können Sie die Zu- und Abgänge der Bänder verwalten, bzw. einsehen."
+                  id="de.dzimmermann.rcp.bsgtaucha.mgt.band"
+                  internal-icon-name="fugue_bandaid--pencil.png"
+                  name="Bänder"
+                  target-class-id="de.dzimmermann.rcp.bsgtaucha.mgt.handler.OpenEditorHandler"
+                  type="handler">
+            </bundle-task>
+            <bundle-task
+                  description="Hier können Sie Tätigkeiten einsehen und Eintragen."
+                  id="de.dzimmermann.rcp.bsgtaucha.mgt.workEntries"
+                  internal-icon-name="fugue_hammer-screwdriver.png"
+                  name="Tätigkeiten"
+                  target-class-id="de.dzimmermann.rcp.bsgtaucha.mgt.handler.OpenEditorHandler"
+                  type="handler">
+            </bundle-task>
+            <bundle-task
+                  description="Hier können Sie Ressourcen verwalten."
+                  id="de.dzimmermann.rcp.bsgtaucha.mgt.resources"
+                  internal-icon-name="fldr_obj.gif"
+                  name="Resourcen"
+                  sort-children="not"
+                  target-class-id="none"
+                  type="none">
+               <bundle-task
+                     description="Hier können Sie die Personen verwalten, wie etwa bestehende Daten verändern oder neue Hinzufügen."
+                     id="de.dzimmermann.rcp.bsgtaucha.mgt.persons"
+                     internal-icon-name="fugue_users.png"
+                     name="Personen"
+                     target-class-id="de.dzimmermann.rcp.bsgtaucha.mgt.handler.OpenEditorHandler"
+                     type="handler">
+               </bundle-task>
+               <bundle-task
+                     description="Hier können Sie alle möglichen Arbeiten einsehen und erweitern."
+                     id="de.dzimmermann.rcp.bsgtaucha.mgt.tasks"
+                     internal-icon-name="fugue_hammer.png"
+                     name="Arbeitsdefinitionen"
+                     target-class-id="de.dzimmermann.rcp.bsgtaucha.mgt.handler.OpenEditorHandler"
+                     type="handler">
+               </bundle-task>
+            </bundle-task>
+            <bundle-task
+                  description="Hier finden Sie Werkzeuge, die man für verschiedene Belange einsetzen kann."
+                  id="de.dzimmermann.rcp.bsgtaucha.mgt.tools"
+                  internal-icon-name="fldr_obj.gif"
+                  name="Werkzeuge"
+                  sort-children="not"
+                  target-class-id="none"
+                  type="none">
+               <bundle-task
+                     description="Der hier angezeigte Wizard erlaubt es, die gegenwärtige Datenbasis in ein bestimmtes Ausgabeformat zu speichern (z.B. CSV- oder OpenDocument-Datei)."
+                     id="de.dzimmermann.rcp.bsgtaucha.mgt.importExport"
+                     internal-icon-name="fugue_document-office.png"
+                     name="Exportieren"
+                     target-class-id="de.dzimmermann.rcp.bsgtaucha.mgt.handler.ODFExportHandler"
+                     type="handler">
+               </bundle-task>
+            </bundle-task>
+         </bundle-task>
+      </bundle-definition>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="de.dzimmermann.rcp.bsgtaucha.mgt.ui.editor.WorkEntryEditor"
+            default="false"
+            icon="icons/flatLayout.gif"
+            id="de.dzimmermann.rcp.bsgtaucha.mgt.ui.editor.WorkEntryEditor"
+            name="Aufgaben">
+      </editor>
+      <editor
+            class="de.dzimmermann.rcp.bsgtaucha.mgt.ui.editor.PersonMgtEditor"
+            default="false"
+            icon="icons/contents_view.gif"
+            id="de.dzimmermann.rcp.bsgtaucha.mgt.ui.editor.PersonMgtEditor"
+            name="Personen verwalten">
+      </editor>
+      <editor
+            class="de.dzimmermann.rcp.bsgtaucha.mgt.ui.editor.TasksMgtEditor"
+            default="false"
+            icon="icons/cheatsheet_taskgroup_obj.gif"
+            id="de.dzimmermann.rcp.bsgtaucha.mgt.ui.editor.TasksMgtEditor"
+            name="Aufgaben verwalten">
+      </editor>
+      <editor
+            class="de.dzimmermann.rcp.bsgtaucha.mgt.ui.editor.BandMgtEditor"
+            default="false"
+            icon="icons/flatLayout.gif"
+            id="de.dzimmermann.rcp.bsgtaucha.mgt.ui.editor.BandMgtEditor"
+            name="Bänder verwalten">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.activities">
+      <category
+            id="de.dzimmermann.rcp.bsgtaucha.mgt.activity.category"
+            name="BSG Taucha Activities">
+      </category>
+      <activity
+            id="de.dzimmermann.rcp.bsgtaucha.mgt.activity"
+            name="Activity: Disable Unwanted Workbench Entries">
+         <enabledWhen>
+            <with variable="activePartId">
+               <equals value="com.sequenom.ivd.actitivities.unwantedActionSet">   
+               </equals>
+            </with>
+         </enabledWhen>
+      </activity>
+      <categoryActivityBinding
+            activityId="de.dzimmermann.rcp.bsgtaucha.mgt.activity"
+            categoryId="de.dzimmermann.rcp.bsgtaucha.mgt.activity.category">
+      </categoryActivityBinding>
+      <activityPatternBinding
+            activityId="de.dzimmermann.rcp.bsgtaucha.mgt.activity"
+            pattern="org\.eclipse\.ui\.console\.ConsoleView">
+      </activityPatternBinding>
+      <activityPatternBinding
+            activityId="de.dzimmermann.rcp.bsgtaucha.mgt.activity"
+            pattern="de\.dzimmermann\.rcp\.basicplatform\.command\.openConsole">
+      </activityPatternBinding>
+      <activityPatternBinding
+            activityId="de.dzimmermann.rcp.bsgtaucha.mgt.activity"
+            pattern="org\.eclipse\.ui\.navigate\..*">
+      </activityPatternBinding>
+   </extension>
+</plugin>

@@ -1,0 +1,36 @@
+OFFENE FEHLER/PROBLEME UND ERWEITERUNGEN
+========================================
+
+FEHLER: Mehrere Tabs offen und modifiziert, dann überschreibt die letzte Änderung die erste!
+FEHLER: Wenn man eine neue Datei erstellt hat, kann man sie nicht gleich nutzen, sondern muss die Dialog "abbrechen" und neu starten.
+
+PROBLEM: Wenn die Anwendung exportiert wird, wird ihr Titel nicht angezeigt, sondern bleibt leer.
+         KONKRETISIERUNG: Tritt nur auf, wenn man die Anwendung aus dem BSG-Plugin heraus exportiert.
+
+ERWEITERUNG: Gelöschte Personen/Arbeiten wieder hinzufügen können?
+ERWEITERUNG: Verbesserte Exportfunktion für Bänder und Tätigkeiten (mehr Einschränkungsmöglichkeiten).
+ERWEITERUNG: Mehr Informationen in der Statuszeile (gegenwärtig nur Stunden für gewählte Person und Stunden der gewählten Arbeit).
+
+
+
+ABGESCHLOSSENE FEHLER/PROBLEME UND ERWEITERUNGEN
+================================================
+
+081211 - KRITISCHER FEHLER: Erstes Speichern wird manchmal ignoriert.
+         LÖSUNG: Event-gesteuerte Lösung der Editor-Dirty-Methode und Propagierung des geänderten Modells - aus irgend einem Grund kam die Änderung aus dem Composite manchmal nicht im Editor an.
+
+081211 - FEHLER: Ab und an erscheint kein (Personen-Nach-)Name beim anlegen neuer Tätigkeiten.
+         LÖSUNG: Modell der LabelProvider war nicht in Sync mit dem des jeweiligen Composites
+081211 - FEHLER: In der Suche steht nur der Vorname.
+         LÖSUNG: Falsches holen des Nachnamen im LabelProvider.
+081211 - FEHLER: Vorm Exportieren müssen am besten einmal alle Tabs geöffnet werden - Probleme mit der Entschlüsselung!
+         LÖSUNG: Selber Mechanismus wie beim Laden eines Editors eingefügt.
+
+081211 - ERWEITERUNG: Export von Tätigkeiten
+         LÖSUNG: Ist erst einmal nur für alle Tätigkeiten aller Personen verfügbar.
+081211 - ERWEITERUNG: gelöschte Personen/Arbeitsdefinitionen werden nur markiert (sowie zugehörige Zeilen in den Bändern und Tätigkeiten)
+         LÖSUNG: Derzeit nur einmal markieren möglich - Rückgängig kann die Markierung derzeit nicht gemacht werden.
+081211 - ERWEITERUNG: In der Suchmaske die Daten deaktivieren können
+         LÖSUNG: Checkbox ersetzt das "von"-Label
+081211 - ERWEITERUNG: Icons der Anwendung anpassen
+         LÖSUNG: Das "fugue_task*.png" war nicht genehm, einen Spaten gibt es nicht, daher ist es nun einmal ein Schraubenschlüssel und einmal der selbige plus Schraubendreher geworden.

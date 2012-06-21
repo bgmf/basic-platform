@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://de.dezimmermann.rcp.bsgtaucha.mgt/bsgtaucha-model"
+	elementFormDefault="qualified" jaxb:extensionbindingprefixes="xjc"
+	jaxb:version="2.1" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://de.dezimmermann.rcp.bsgtaucha.mgt/bsgtaucha-model">
+
+	<xsd:annotation>
+		<xsd:appinfo>
+			<xsd:globalBindings generateIsSetMethod="false">
+				<xsd:javaType name="java.util.Calendar" xmlType="date"
+					parseMethod="javax.xml.bind.DatatypeConverter.parseDate"
+					printMethod="javax.xml.bind.DatatypeConverter.printDate" />
+				<xsd:javaType name="java.util.Calendar" xmlType="dateTime"
+					parseMethod="javax.xml.bind.DatatypeConverter.parseDateTime"
+					printMethod="javax.xml.bind.DatatypeConverter.printDateTime" />
+			</xsd:globalBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+
+	<xsd:element name="root" type="rootType" final="restriction"></xsd:element>
+
+	<xsd:complexType name="rootType">
+		<xsd:sequence>
+			<xsd:element name="persons" type="personsType" maxOccurs="1"
+				minOccurs="0">
+			</xsd:element>
+    		<xsd:element name="works" type="worksType" maxOccurs="1" minOccurs="0"></xsd:element>
+        </xsd:sequence>
+		<xsd:attribute name="default-pw" type="xsd:string" use="optional"></xsd:attribute>
+		<xsd:attribute name="advanced-pw" type="xsd:string" use="optional"></xsd:attribute>
+	</xsd:complexType>
+
+
+    <xsd:simpleType name="bandTypes">
+    	<xsd:restriction base="xsd:string">
+    		<xsd:enumeration value="continuous"></xsd:enumeration>
+    		<xsd:enumeration value="lateral"></xsd:enumeration>
+    	</xsd:restriction>
+    </xsd:simpleType>
+
+
+    <xsd:complexType name="bandType">
+    	<xsd:sequence>
+    		<xsd:element name="action" type="actionType" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="personsType">
+    	<xsd:sequence>
+    		<xsd:element name="person" type="personType" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="personType">
+    	<xsd:sequence>
+    		<xsd:element name="name" type="xsd:string"></xsd:element>
+    		<xsd:element name="firstname" type="xsd:string"></xsd:element>
+    		<xsd:element name="street" type="xsd:string"></xsd:element>
+    		<xsd:element name="postalcode" type="xsd:string"></xsd:element>
+    		<xsd:element name="city" type="xsd:string"></xsd:element>
+    		<xsd:element name="phone" type="xsd:string"></xsd:element>
+    		<xsd:element name="mobile" type="xsd:string"></xsd:element>
+    		<xsd:element name="fax" type="xsd:string"></xsd:element>
+    		<xsd:element name="email" type="xsd:string"></xsd:element>
+    	</xsd:sequence>
+    	<xsd:attribute name="id" type="xsd:string"></xsd:attribute>
+    	<xsd:attribute name="birthday" type="xsd:date"></xsd:attribute>
+    	<xsd:attribute name="active-member" type="xsd:boolean"></xsd:attribute>
+    	<xsd:attribute name="removed" type="xsd:boolean"></xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:complexType name="actionType">
+    	<xsd:sequence>
+    		<xsd:element name="type" type="bandTypes"></xsd:element>
+    		<xsd:element name="description" type="xsd:string"></xsd:element>
+    	</xsd:sequence>
+    	<xsd:attribute name="person-id" type="xsd:string"></xsd:attribute>
+    	<xsd:attribute name="work-id" type="xsd:string"></xsd:attribute>
+    	<xsd:attribute name="amount" type="xsd:int"></xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:complexType name="worksType">
+    	<xsd:sequence>
+    		<xsd:element name="work" type="workType" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+    		<xsd:element name="entry" type="entryType" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+    	</xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="workType">
+    	<xsd:sequence>
+    		<xsd:element name="name" type="xsd:string" maxOccurs="1"
+    			minOccurs="1">
+    		</xsd:element>
+    		<xsd:element name="description" type="xsd:string"
+    			maxOccurs="1" minOccurs="0">
+    		</xsd:element>
+    	</xsd:sequence>
+    	<xsd:attribute name="id" type="xsd:string"></xsd:attribute>
+    	<xsd:attribute name="affect-band" type="xsd:boolean"></xsd:attribute>
+    	<xsd:attribute name="removed" type="xsd:boolean"></xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:complexType name="entryType">
+    	<xsd:sequence>
+    		<xsd:element name="comment" type="xsd:string" maxOccurs="1" minOccurs="0"></xsd:element>
+    		<xsd:element name="band-action" type="bandActionType" maxOccurs="1" minOccurs="0"></xsd:element>
+    	</xsd:sequence>
+    	<xsd:attribute name="person-id" type="xsd:string"></xsd:attribute>
+    	<xsd:attribute name="work-id" type="xsd:string"></xsd:attribute>
+    	<xsd:attribute name="date" type="xsd:date"></xsd:attribute>
+    	<xsd:attribute name="time" type="xsd:float"></xsd:attribute>
+    </xsd:complexType>
+
+    <xsd:complexType name="bandActionType">
+    	<xsd:sequence>
+    		<xsd:element name="track" type="xsd:int" maxOccurs="unbounded" minOccurs="0"></xsd:element>
+    	</xsd:sequence>
+    	<xsd:attribute name="band-type" type="bandTypes"></xsd:attribute>
+    	<xsd:attribute name="amount" type="xsd:int"></xsd:attribute>
+    </xsd:complexType>
+</xsd:schema>

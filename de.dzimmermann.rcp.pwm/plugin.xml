@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.dzimmermann.rcp.basicplatform.plugin">
+      <bundle-definition
+            exec-factory="de.dzimmermann.rcp.pwm.factory.InternalExecutableFactory">
+         <bundle-task
+               description="The Password Manager"
+               enabled="true"
+               id="de.dzimmermann.rcp.pwm.root"
+               internal-icon-name="fugue_databases.png"
+               name="PWM"
+               sort-children="not"
+               target-class-id="none"
+               type="none">
+            <bundle-task
+                  description="Opens a dialog to manage password database files."
+                  enabled="true"
+                  id="de.dzimmermann.rcp.pwm.btOpenDB"
+                  internal-icon-name="fugue_database.png"
+                  name="Open Database"
+                  sort-children="not"
+                  target-class-id="de.dzimmermann.rcp.pwm.handler.OpenPWMDBHandler"
+                  type="handler">
+            </bundle-task>
+         </bundle-task>
+      </bundle-definition>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="de.dzimmermann.rcp.pwm.ui.editor.PWMEditor"
+            default="false"
+            extensions="pwm"
+            icon="icons/fugue_key--pencil.png"
+            id="de.dzimmermann.rcp.pwm.ui.editor.PWMEditor"
+            name="PWM Editor">
+      </editor>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            description="Manage password entries and the groups they are assigned to."
+            id="de.dzimmermann.rcp.pwm.groupsAndEntries"
+            name="PWM">
+      </category>
+      <command
+            categoryId="de.dzimmermann.rcp.pwm.groupsAndEntries"
+            description="Add a new group to the current database."
+            id="de.dzimmermann.rcp.pwm.addGroup"
+            name="Add Group">
+      </command>
+      <command
+            categoryId="de.dzimmermann.rcp.pwm.groupsAndEntries"
+            description="Add a new sub group to the current selected group."
+            id="de.dzimmermann.rcp.pwm.addSubGroup"
+            name="Add Sub Group">
+      </command>
+      <command
+            categoryId="de.dzimmermann.rcp.pwm.groupsAndEntries"
+            description="Edit an existing group of the current database."
+            id="de.dzimmermann.rcp.pwm.editGroup"
+            name="Edit Group">
+      </command>
+      <command
+            categoryId="de.dzimmermann.rcp.pwm.groupsAndEntries"
+            description="Remove a new group of the current database."
+            id="de.dzimmermann.rcp.pwm.removeGroup"
+            name="Remove Group">
+      </command>
+      <command
+            categoryId="de.dzimmermann.rcp.pwm.groupsAndEntries"
+            description="Add a new entry to the current selected group."
+            id="de.dzimmermann.rcp.pwm.addEntry"
+            name="Add Entry">
+      </command>
+      <command
+            categoryId="de.dzimmermann.rcp.pwm.groupsAndEntries"
+            description="Edit an existing entry of the current selected group."
+            id="de.dzimmermann.rcp.pwm.editEntry"
+            name="Edit Entry">
+      </command>
+      <command
+            categoryId="de.dzimmermann.rcp.pwm.groupsAndEntries"
+            description="Remove a new entry of the current selected group."
+            id="de.dzimmermann.rcp.pwm.removeEntry"
+            name="Remove Entry">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="de.dzimmermann.rcp.pwm.handler.AddGroupHandler"
+            commandId="de.dzimmermann.rcp.pwm.addGroup">
+      </handler>
+      <handler
+            class="de.dzimmermann.rcp.pwm.handler.AddGroupHandler$AddSubGroupHandler"
+            commandId="de.dzimmermann.rcp.pwm.addSubGroup">
+         <enabledWhen>
+            <reference
+                  definitionId="de.zimmermann.rcp.pwm.subgroup.selected">
+            </reference>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="de.dzimmermann.rcp.pwm.handler.EditGroupHandler"
+            commandId="de.dzimmermann.rcp.pwm.editGroup">
+      </handler>
+      <handler
+            class="de.dzimmermann.rcp.pwm.handler.RemoveGroupHandler"
+            commandId="de.dzimmermann.rcp.pwm.removeGroup">
+      </handler>
+      <handler
+            class="de.dzimmermann.rcp.pwm.handler.AddEntryHandler"
+            commandId="de.dzimmermann.rcp.pwm.addEntry">
+         <enabledWhen>
+            <reference
+                  definitionId="de.zimmermann.rcp.pwm.entries.available">
+            </reference>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="de.dzimmermann.rcp.pwm.handler.EditEntryHandler"
+            commandId="de.dzimmermann.rcp.pwm.editEntry">
+         <enabledWhen>
+            <reference
+                  definitionId="de.zimmermann.rcp.pwm.entry.selected">
+            </reference>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="de.dzimmermann.rcp.pwm.handler.RemoveEntryHandler"
+            commandId="de.dzimmermann.rcp.pwm.removeEntry">
+         <enabledWhen>
+            <reference
+                  definitionId="de.zimmermann.rcp.pwm.entry.selected">
+            </reference>
+         </enabledWhen>
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar">
+         <toolbar
+               id="de.dzimmermann.rcp.pwm.toolbar.groups">
+            <separator
+                  name="views">
+            </separator>
+            <separator
+                  name="groups">
+            </separator>
+            <command
+                  commandId="de.dzimmermann.rcp.pwm.addGroup"
+                  icon="icons/fugue_folder--plus.png"
+                  id="de.dzimmermann.rcp.pwm.toolbar.groups.addGroup"
+                  label="Add Group"
+                  style="push"
+                  tooltip="Add a new group to the current database.">
+               <visibleWhen>
+                  <with
+                        variable="activeEditorId">
+                     <equals
+                           value="de.dzimmermann.rcp.pwm.ui.editor.PWMEditor">
+                     </equals>
+                  </with>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="de.dzimmermann.rcp.pwm.addSubGroup"
+                  icon="icons/fugue_folder-bookmark.png"
+                  id="de.dzimmermann.rcp.pwm.toolbar.groups.addSubGroup"
+                  label="Add Sub-Group"
+                  style="push"
+                  tooltip="Add a new sub-group to the current group.">
+               <visibleWhen>
+                  <with
+                        variable="activeEditorId">
+                     <equals
+                           value="de.dzimmermann.rcp.pwm.ui.editor.PWMEditor">
+                     </equals>
+                  </with>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="de.dzimmermann.rcp.pwm.editGroup"
+                  icon="icons/fugue_folder--pencil.png"
+                  label="Edit Group"
+                  style="push"
+                  tooltip="Edit an existing group of the current database.">
+               <visibleWhen>
+                  <with
+                        variable="activeEditorId">
+                     <equals
+                           value="de.dzimmermann.rcp.pwm.ui.editor.PWMEditor">
+                     </equals>
+                  </with>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="de.dzimmermann.rcp.pwm.removeGroup"
+                  icon="icons/fugue_folder--minus.png"
+                  label="Remove Group"
+                  style="push"
+                  tooltip="Remove a new group of the current database.">
+               <visibleWhen>
+                  <with
+                        variable="activeEditorId">
+                     <equals
+                           value="de.dzimmermann.rcp.pwm.ui.editor.PWMEditor">
+                     </equals>
+                  </with>
+               </visibleWhen>
+            </command>
+            <separator
+                  name="additions">
+            </separator>
+         </toolbar>
+         <toolbar
+               id="de.dzimmermann.rcp.pwm.toolbar.entries">
+            <separator
+                  name="views">
+            </separator>
+            <separator
+                  name="entries">
+            </separator>
+            <command
+                  commandId="de.dzimmermann.rcp.pwm.addEntry"
+                  icon="icons/fugue_key--plus.png"
+                  label="Add Entry"
+                  style="push"
+                  tooltip="Add a new entry to the current selected group.">
+               <visibleWhen>
+                  <with
+                        variable="activeEditorId">
+                     <equals
+                           value="de.dzimmermann.rcp.pwm.ui.editor.PWMEditor">
+                     </equals>
+                  </with>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="de.dzimmermann.rcp.pwm.editEntry"
+                  icon="icons/fugue_key--pencil.png"
+                  label="Edit Entry"
+                  style="push"
+                  tooltip="Edit an existing entry of the current selected group.">
+               <visibleWhen>
+                  <with
+                        variable="activeEditorId">
+                     <equals
+                           value="de.dzimmermann.rcp.pwm.ui.editor.PWMEditor">
+                     </equals>
+                  </with>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="de.dzimmermann.rcp.pwm.removeEntry"
+                  icon="icons/fugue_key--minus.png"
+                  label="Remove Entry"
+                  style="push"
+                  tooltip="Remove a new entry of the current selected group.">
+               <visibleWhen>
+                  <with
+                        variable="activeEditorId">
+                     <equals
+                           value="de.dzimmermann.rcp.pwm.ui.editor.PWMEditor">
+                     </equals>
+                  </with>
+               </visibleWhen>
+            </command>
+            <separator
+                  name="additions">
+            </separator>
+         </toolbar>
+      </menuContribution>
+      <menuContribution
+            allPopups="true"
+            locationURI="menu:de.dzimmermann.rcp.pwm.toolbar.groups.addGroup">
+         <separator
+               name="groups">
+         </separator>
+         <command
+               commandId="de.dzimmermann.rcp.pwm.addSubGroup"
+               icon="icons/fugue_folder-bookmark.png"
+               id="de.dzimmermann.rcp.pwm.toolbar.groups.addSubGroup"
+               label="Add Sub-Group"
+               style="push"
+               tooltip="Add a new sub-group to the current group.">
+         </command>
+         <separator
+               name="additions">
+         </separator>
+      </menuContribution>
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               icon="icons/fugue_databases.png"
+               id="pwm"
+               label="PWM"
+               mnemonic="P"
+               tooltip="Password Management">
+            <visibleWhen>
+               <with
+                     variable="activeEditorId">
+                  <equals
+                        value="de.dzimmermann.rcp.pwm.ui.editor.PWMEditor">
+                  </equals>
+               </with>
+            </visibleWhen>
+            <separator
+                  name="views">
+            </separator>
+            <separator
+                  name="groups">
+            </separator>
+            <command
+                  commandId="de.dzimmermann.rcp.pwm.addGroup"
+                  icon="icons/fugue_folder--plus.png"
+                  label="Add Group"
+                  style="push"
+                  tooltip="Add a new group to the current database.">
+               <visibleWhen>
+                  <with
+                        variable="activeEditorId">
+                     <equals
+                           value="de.dzimmermann.rcp.pwm.ui.editor.PWMEditor">
+                     </equals>
+                  </with>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="de.dzimmermann.rcp.pwm.addSubGroup"
+                  icon="icons/fugue_folder-bookmark.png"
+                  id="de.dzimmermann.rcp.pwm.toolbar.groups.addSubGroup"
+                  label="Add Sub-Group"
+                  style="push"
+                  tooltip="Add a new sub-group to the current group.">
+               <visibleWhen>
+                  <with
+                        variable="activeEditorId">
+                     <equals
+                           value="de.dzimmermann.rcp.pwm.ui.editor.PWMEditor">
+                     </equals>
+                  </with>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="de.dzimmermann.rcp.pwm.editGroup"
+                  icon="icons/fugue_folder--pencil.png"
+                  label="Edit Group"
+                  style="push"
+                  tooltip="Edit an existing group of the current database.">
+               <visibleWhen>
+                  <with
+                        variable="activeEditorId">
+                     <equals
+                           value="de.dzimmermann.rcp.pwm.ui.editor.PWMEditor">
+                     </equals>
+                  </with>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="de.dzimmermann.rcp.pwm.removeGroup"
+                  icon="icons/fugue_folder--minus.png"
+                  label="Remove Group"
+                  style="push"
+                  tooltip="Remove a new group of the current database.">
+               <visibleWhen>
+                  <with
+                        variable="activeEditorId">
+                     <equals
+                           value="de.dzimmermann.rcp.pwm.ui.editor.PWMEditor">
+                     </equals>
+                  </with>
+               </visibleWhen>
+            </command>
+            <separator
+                  name="entries">
+            </separator>
+            <command
+                  commandId="de.dzimmermann.rcp.pwm.addEntry"
+                  icon="icons/fugue_key--plus.png"
+                  label="Add Entry"
+                  style="push"
+                  tooltip="Add a new entry to the current selected group.">
+               <visibleWhen>
+                  <with
+                        variable="activeEditorId">
+                     <equals
+                           value="de.dzimmermann.rcp.pwm.ui.editor.PWMEditor">
+                     </equals>
+                  </with>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="de.dzimmermann.rcp.pwm.editEntry"
+                  icon="icons/fugue_key--pencil.png"
+                  label="Edit Entry"
+                  style="push"
+                  tooltip="Edit an existing entry of the current selected group.">
+               <visibleWhen>
+                  <with
+                        variable="activeEditorId">
+                     <equals
+                           value="de.dzimmermann.rcp.pwm.ui.editor.PWMEditor">
+                     </equals>
+                  </with>
+               </visibleWhen>
+            </command>
+            <command
+                  commandId="de.dzimmermann.rcp.pwm.removeEntry"
+                  icon="icons/fugue_key--minus.png"
+                  label="Remove Entry"
+                  style="push"
+                  tooltip="Remove a new entry of the current selected group.">
+               <visibleWhen>
+                  <with
+                        variable="activeEditorId">
+                     <equals
+                           value="de.dzimmermann.rcp.pwm.ui.editor.PWMEditor">
+                     </equals>
+                  </with>
+               </visibleWhen>
+            </command>
+            <separator
+                  name="additions">
+            </separator>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.services">
+      <sourceProvider
+            provider="de.dzimmermann.rcp.pwm.util.PWMStates">
+         <variable
+               name="de.zimmermann.rcp.pwm.entries.available.state"
+               priorityLevel="workbench">
+         </variable>
+         <variable
+               name="de.zimmermann.rcp.pwm.subgroup.selected.state"
+               priorityLevel="workbench">
+         </variable>
+         <variable
+               name="de.zimmermann.rcp.pwm.entry.selected.state"
+               priorityLevel="workbench">
+         </variable>
+      </sourceProvider>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="de.zimmermann.rcp.pwm.entries.available">
+         <with
+               variable="de.zimmermann.rcp.pwm.entries.available.state">
+            <equals
+                  value="TRUE">
+            </equals>
+         </with>
+      </definition>
+      <definition
+            id="de.zimmermann.rcp.pwm.subgroup.selected">
+         <with
+               variable="de.zimmermann.rcp.pwm.subgroup.selected.state">
+            <equals
+                  value="TRUE">
+            </equals>
+         </with>
+      </definition>
+      <definition
+            id="de.zimmermann.rcp.pwm.entry.selected">
+         <with
+               variable="de.zimmermann.rcp.pwm.entry.selected.state">
+            <equals
+                  value="TRUE">
+            </equals>
+         </with>
+      </definition>
+   </extension>
+
+</plugin>

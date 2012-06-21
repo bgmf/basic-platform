@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scr:component xmlns:scr="http://www.osgi.org/xmlns/scr/v1.1.0" name="basicplatformServices.consumer">
+   <implementation class="de.dzimmermann.rcp.basicplatform.services.consumer.GlobalServiceConsumer"/>
+   <reference bind="setAvailablePlugins" cardinality="1..1" interface="de.dzimmermann.rcp.basicplatform.services.IAvailablePluginService" name="IAvailablePluginService" policy="static" unbind="unsetAvailablePlugins"/>
+   <reference bind="setGroupService" cardinality="1..1" interface="de.dzimmermann.rcp.basicplatform.services.IGroupService" name="IGroupService" policy="static" unbind="unsetGroupService"/>
+</scr:component>

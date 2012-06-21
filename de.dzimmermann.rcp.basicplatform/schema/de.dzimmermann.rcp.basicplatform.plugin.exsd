@@ -1,0 +1,298 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="de.dzimmermann.rcp.basicplatform" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appinfo>
+         <meta.schema plugin="de.dzimmermann.rcp.basicplatform" id="de.dzimmermann.rcp.basicplatform.plugin" name="Basic Platform Plug-In Management"/>
+      </appinfo>
+      <documentation>
+         This Extension Point provides a definition for each Plugin, which will have some content (so called &quot;tasks&quot;) displayed within the Platforms left handed navigation view. Additionally a mapping for an EditorID to an TaskEditorInput implementation can be added.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appinfo>
+            <meta.element />
+         </appinfo>
+      </annotation>
+      <complexType>
+         <sequence>
+            <choice>
+               <element ref="bundle-definition"/>
+            </choice>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="bundle-definition">
+      <annotation>
+         <documentation>
+            In this element, the visual defintion of the task model is done via xml elements. Also present is the attribute &apos;exec-factory&apos;.
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence>
+            <element ref="bundle-task"/>
+         </sequence>
+         <attribute name="exec-factory" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The ExecutableFactory class wich will be looked up opening an editor, dialog or wizard.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":de.dzimmermann.rcp.basicplatform.factory.ExecutableFactory"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="bundle-task">
+      <annotation>
+         <documentation>
+            This is the adaption of the older TaskModel, but now as an XML tree.
+         </documentation>
+      </annotation>
+      <complexType>
+         <sequence>
+            <element ref="bundle-task" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="group-restriction" minOccurs="0" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  The id of this task. This attribute is not required, but needed if you want to specify a parent-task-id.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="parent-task-id" type="string">
+            <annotation>
+               <documentation>
+                  If used, this indicates a parent task under which this task (and all it&apos;s children!) will be located. This is only applicable for a plugins root task, for all of it&apos;s children, this attribute will be ignored. The specified ID does not indicate a tasks parent in the plugin tree. For example if you enter such an ID to a task that is not the plugins root task, the specified ID might point somewhere else but it&apos;s
+real parent. But nevertheless, it will in any case be ignored.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="target-class-id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  This is a most vital attribute: It defines the target to be opened, when sth. is selected in the left handed side view.
+Use a View-ID or Editor-ID, when you try to invoke a view or editor. When opening a Dialog, Wizard or sth. like this, you need to specify the class, this class will then be checked via the exec-factory attributes class within the plugins classloader. If there is a Wizard, Dialog, (...) then this one will be invoked and displayed. Use keyword &apos;none&apos; if no implementation is needed (see attribute &apos;type&apos; for more information - this attribute is not allowed to be empty). (Be aware, that &quot;dialog&quot; implemementation only allow the default constructor (Shell), &quot;wizard&quot; and &quot;handler&quot; only a zero arguement constructor)
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="target-editor-input" type="string">
+            <annotation>
+               <documentation>
+                  This is a TaskEditorInput implementation for a editor, if this is the implementation of the current task.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="de.dzimmermann.rcp.basicplatform.model.TaskEditorInput:"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  This is the human readable name as it is displayed in the left sided view.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="type" use="required">
+            <annotation>
+               <documentation>
+                  At the moment there are six supported types: &quot;none&quot; - no action to be done, &apos;target-class-id&apos; must exist, but can be empty; &quot;editor&quot; - specify a valid editor id (most likely one of your plugin); &quot;view&quot; - specify the id of another view to open; &quot;dialog&quot; - specify the class of your TitleAreaDialog; &quot;wizard&quot; - specify the class of your Wizard; &quot;handler&quot; - specify the class of your AbstractHandler implementation to call (Be aware, that &quot;dialog&quot; implemementation only allow the default constructor (Shell), &quot;wizard&quot; and &quot;handler&quot; only a zero arguement constructor)
+               </documentation>
+            </annotation>
+            <simpleType>
+               <restriction base="string">
+                  <enumeration value="none">
+                  </enumeration>
+                  <enumeration value="editor">
+                  </enumeration>
+                  <enumeration value="view">
+                  </enumeration>
+                  <enumeration value="dialog">
+                  </enumeration>
+                  <enumeration value="wizard">
+                  </enumeration>
+                  <enumeration value="handler">
+                  </enumeration>
+               </restriction>
+            </simpleType>
+         </attribute>
+         <attribute name="description" type="string">
+            <annotation>
+               <documentation>
+                  This is the optional description of the task, there is only one realy applikation for this: Tooltips, when using editors.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="enabled" type="boolean">
+            <annotation>
+               <documentation>
+                  per default (e.g. when this attribute is not specified) all tasks will be enabled. This is usefull if you want to enable some tasks later, during the usage of other tasks.
+The implementation is - atm - quite primitive and only check this value on startup, but maybe later there is more use for it.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="internal-icon-name" type="string">
+            <annotation>
+               <documentation>
+                  This values specifies a name of a PFSCoreIcon (see javadoc for more information!).
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="image-resource" type="string">
+            <annotation>
+               <documentation>
+                  This attributes specifies a resource from within the plugin - ensure, that this resource is a valid image!
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="resource"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="image-class" type="string">
+            <annotation>
+               <documentation>
+                  Optional: A Image-implementing class.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn="org.eclipse.swt.graphics.Image:"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="help-context-id" type="string">
+            <annotation>
+               <documentation>
+                  The id to a a context sensitive help entry. Will be displayed, when the plugin or it&apos;s tree is selected.
+While it is possible to add an ID to each task, currently only the root tasks will be considered by the API.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="sort-children">
+            <annotation>
+               <documentation>
+                  Per default, the children of a task will be ordered, but sometimes this may interfere with the way you intended to represent the sub-tasks. The following types of sorting are available &quot;asc&quot; for ascending by task name (default value), &quot;desc&quot; for descending by task name and &quot;not&quot; for no sorting at all.
+               </documentation>
+            </annotation>
+            <simpleType>
+               <restriction base="string">
+                  <enumeration value="asc">
+                  </enumeration>
+                  <enumeration value="desc">
+                  </enumeration>
+                  <enumeration value="not">
+                  </enumeration>
+               </restriction>
+            </simpleType>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="group-restriction">
+      <annotation>
+         <documentation>
+            Use an element of this type to restrict the users that hava access to the current task by specifing groups that are allowed to hava access to the UI representation.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="group-name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The name of the group.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="inverse" type="boolean">
+            <annotation>
+               <documentation>
+                  &quot;true&quot; = blacklisting; &quot;false&quot; = whitelisting; default = &quot;false&quot;.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+
+   <annotation>
+      <appinfo>
+         <meta.section type="examples"/>
+      </appinfo>
+      <documentation>
+         &lt;!-- old and deprecated since PCP 0.2.0 --&gt;
+&lt;extension
+    point=&quot;de.dzimmermann.rcp.basicplatform.manager&quot;&gt;
+    &lt;bundle-to-load
+         bundle-executable-factory=&quot;de.dzimmermann.rcp.basicplatform.configuration.factory.SSDConfigExecutableFactory&quot;
+         bundle-task-model=&quot;de.dzimmermann.rcp.basicplatform.configuration.model.SSDConfigTaskModel&quot;&gt;
+   &lt;/bundle-to-load&gt;
+&lt;/extension&gt;
+
+&lt;!-- new version since PCP 0.2.0 --&gt;
+&lt;extension
+      point=&quot;de.dzimmermann.rcp.basicplatform.manager&quot;&gt;
+   &lt;pfs-bundle-definition
+         exec-factory=&quot;de.dzimmermann.rcp.basicplatform.documents.factory.SSDDocumentsExecutableFactory&quot;&gt;
+      &lt;pfs-bundle-task
+            description=&quot;The root Task of the SSDConfig plugin &amp;apos;de.dzimmermann.rcp.basicplatform.documents&amp;apos;.&quot;
+            enabled=&quot;true&quot;
+            image-resource=&quot;icons/tree_mode.gif&quot;
+            name=&quot;Document Generator&quot;
+            pfs-core-icon-name=&quot;ipqlogo_16.gif&quot;
+            target-class-id=&quot;none&quot;
+            type=&quot;none&quot;&gt;
+         &lt;pfs-bundle-task
+               description=&quot;Here you can specify the nesseccarry options to create a Document Report&quot;
+               enabled=&quot;true&quot;
+               image-resource=&quot;icons/fldr_obj.gif&quot;
+               name=&quot;1) Generate Documents&quot;
+               pfs-core-icon-name=&quot;fldr_obj.gif&quot;
+               target-class-id=&quot;de.dzimmermann.rcp.basicplatform.documents.ui.editor.DocuementCreationEditor&quot;
+               type=&quot;editor&quot;&gt;
+         &lt;/pfs-bundle-task&gt;
+         &lt;pfs-bundle-task
+               description=&quot;With this Editor you can create or modify Document Templates.&quot;
+               enabled=&quot;true&quot;
+               image-resource=&quot;icons/contents_view.gif&quot;
+               name=&quot;2) Customize Templates&quot;
+               pfs-core-icon-name=&quot;contents_view.gif&quot;
+               target-class-id=&quot;none&quot;
+               type=&quot;none&quot;&gt;
+         &lt;/pfs-bundle-task&gt;
+      &lt;/pfs-bundle-task&gt;
+   &lt;/pfs-bundle-definition&gt;
+&lt;/extension&gt;
+      </documentation>
+   </annotation>
+
+
+
+
+</schema>

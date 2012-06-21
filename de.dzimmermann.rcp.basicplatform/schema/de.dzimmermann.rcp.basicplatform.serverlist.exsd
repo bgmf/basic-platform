@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Schema file written by PDE -->
+<schema targetNamespace="de.dzimmermann.rcp.basicplatform" xmlns="http://www.w3.org/2001/XMLSchema">
+<annotation>
+      <appinfo>
+         <meta.schema plugin="de.dzimmermann.rcp.basicplatform" id="de.dzimmermann.rcp.basicplatform.serverlist" name="Basic Platform Remote Server List"/>
+      </appinfo>
+      <documentation>
+         A plugin, displaying this extension point will host a list of possible remote servers for the use of WebService connections.
+This is only an approximation and might not be the ultimat solution for the connetion to multiple server, because the user need to now which data are reachable through which server.
+      </documentation>
+   </annotation>
+
+   <element name="extension">
+      <annotation>
+         <appinfo>
+            <meta.element />
+         </appinfo>
+      </annotation>
+      <complexType>
+         <sequence>
+            <element ref="truststore"/>
+            <element ref="server" minOccurs="0" maxOccurs="unbounded"/>
+         </sequence>
+         <attribute name="point" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="id" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute translatable="true"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="truststore">
+      <annotation>
+         <documentation>
+            This element simply contains the internal path to the truststore, which is stored into the workspace, to be loaded during startup, to access remote web server via https.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="path" type="string" use="required">
+            <annotation>
+               <documentation>
+                  The plug-in internal path to the truststore, which will be used for https sessions.
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="resource"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="password" type="string">
+            <annotation>
+               <documentation>
+                  If the truststore is secured with a password, enter it here.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="server">
+      <annotation>
+         <documentation>
+            This element hosts a map of a server name and an URL which is hosting a service. The name is for the display, the URL for the connection.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  This is the name for a remote server, which is hosting a set of PFS services, as shown within the PCP. It maps to a Web Server URL which is, after selection, the target of the requests.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="url" type="string" use="required">
+            <annotation>
+               <documentation>
+                  This is the URL to a remote server hosting different PFS services. The URL will always be hidden from the user, only the name will be displayed.
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <annotation>
+      <appinfo>
+         <meta.section type="since"/>
+      </appinfo>
+      <documentation>
+         PCP 0.3.0
+      </documentation>
+   </annotation>
+
+
+
+
+
+</schema>

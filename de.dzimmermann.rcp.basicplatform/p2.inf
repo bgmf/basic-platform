@@ -1,0 +1,8 @@
+instructions.configure=\
+  addRepository(type:0,location:http${#58}//download.eclipse.org/releases/indigo);\
+  addRepository(type:1,location:http${#58}//download.eclipse.org/releases/indigo);\
+  addRepository(type:0,location:http${#58}//download.eclipse.org/eclipse/updates/3.7);\
+  addRepository(type:1,location:http${#58}//download.eclipse.org/eclipse/updates/3.7);\
+  addRepository(type:0,location:file${#58}///home/dzimmermann/workspaces/pfs-workspace/PCPUpdateSite);\
+  addRepository(type:1,location:file${#58}///home/dzimmermann/workspaces/pfs-workspace/PCPUpdateSite);
+  
